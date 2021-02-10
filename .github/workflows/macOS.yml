@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-10.15
 
     steps:
-      - name: Build
+      - name: Checkout
         uses: actions/checkout@v2
       - name: Build
         run: |
@@ -27,6 +27,11 @@ jobs:
           mkdir client
           (cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
           (cd client && bash src/macosx/build_bundle.sh `pwd`/../release) 
-          mkdir server
-          (cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
-          (cd server && bash src/macosx/build_bundle.sh `pwd`/../release) 
+          #mkdir server
+          #(cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
+          #(cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: macOS builds
+          path: release
