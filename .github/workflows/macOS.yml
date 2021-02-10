@@ -18,15 +18,15 @@ jobs:
         run: |
           #brew install pkg-config autoconf automake libxml2 sdl sdl_image sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
           # for 0.2.X
-          brew install pkg-config autoconf automake libxml2 sdl sdl_image dylibbundler create-dmg 
+          brew install autoconf automake sdl sdl_image dylibbundler create-dmg 
           # for 0.4
-          #brew install pkg-config autoconf automake libxml2 sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
+          #brew install automake libxml2 sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
           git clone https://gitlab.com/zmanuel/armagetronad.git
           git -C armagetronad checkout legacy_0.2.8.3_macos_bundle
           (cd armagetronad && ./bootstrap.sh)
           mkdir client
           (cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
-          (cd client && bash src/macosx/build_bundle.sh ../release) 
+          (cd client && bash src/macosx/build_bundle.sh `pwd`/../release) 
           mkdir server
           (cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
-          (cd server && bash src/macosx/build_bundle.sh ../release) 
+          (cd server && bash src/macosx/build_bundle.sh `pwd`/../release) 
