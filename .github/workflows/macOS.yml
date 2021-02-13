@@ -40,9 +40,10 @@ jobs:
         with:
           name: macOS images
           path: release
-      - name: Deploy
+      - name: SSH Agent
         uses: webfactory/ssh-agent@v0.4.1
         with:
           ssh-private-key: ${{ secrets.SSH_KEY_DEPLOY }}
+      - name: Deploy
         run: |
           rsync release ${UPLOAD}
