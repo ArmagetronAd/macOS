@@ -16,24 +16,30 @@ jobs:
       - name: Build
         run: |
           set -x
-          #brew install pkg-config autoconf automake libxml2 sdl sdl_image sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
+
+          ## prepare system
           # for 0.2.X
-          brew install sdl sdl_image dylibbundler create-dmg 
+          brew install automake sdl sdl_image dylibbundler create-dmg 
           # for 0.4
-          #brew install sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
-          # git clone https://gitlab.com/zmanuel/armagetronad.git
-          # git -C armagetronad checkout legacy_0.2.8.3_macos_bundle
-          # import build settings
+          #brew install automake sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
+
+          ## import build settings
           . ./INFO
+
+          ## get source
           wget "${TARBALL}" -O source.tbz
           (mkdir source; cd source; tar -xjf ../source.tbz; mv * ../armagetronad)
           rmdir source
           rm -f source.tbz
-          # (cd armagetronad && ./bootstrap.sh)
-          mkdir client
+
+          ## maybe speed up testing
           export ARMAGETRONAD_FAKERELEASE=true
+
+          ## build client
+          mkdir client
           (cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
           (cd client && bash src/macosx/build_bundle.sh `pwd`/../release) 
+          ## build server
           #mkdir server
           #(cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
           #(cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
@@ -49,4 +55,6 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY_DEPLOY }}
       - name: Deploy
         run: |
-          rsync release ${UPLOAD}
+          rsync -r release ${UPLOAD}
+          echo "done" > release/mac_is_done.txt
+          scp release/mac_is_done.txt ${UPLOAD}/
