@@ -19,7 +19,7 @@ jobs:
 
           ## prepare system
           # for 0.2.X
-          brew install automake sdl sdl_image dylibbundler create-dmg 
+          #brew install automake sdl sdl_image dylibbundler create-dmg 
           # for 0.4
           #brew install automake sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
 
@@ -27,22 +27,25 @@ jobs:
           . ./INFO
 
           ## get source
-          wget "${TARBALL}" -O source.tbz
-          (mkdir source; cd source; tar -xjf ../source.tbz; mv *${VERSION}* ../armagetronad)
-          rmdir source
-          rm -f source.tbz
+          #wget "${TARBALL}" -O source.tbz
+          #(mkdir source; cd source; tar -xjf ../source.tbz; mv *${VERSION}* ../armagetronad)
+          #rmdir source
+          #rm -f source.tbz
 
           ## maybe speed up testing
           export ARMAGETRONAD_FAKERELEASE=true
 
           ## build client
-          mkdir client
-          (cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
-          (cd client && bash src/macosx/build_bundle.sh `pwd`/../release) 
+          #mkdir client
+          #(cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
+          #(cd client && bash src/macosx/build_bundle.sh `pwd`/../release)
           ## build server
           #mkdir server
           #(cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
           #(cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
+
+          mkdir -p release
+          echo "fake" > release/fake
           set +x
       - name: Artifacts
         uses: actions/upload-artifact@v2
