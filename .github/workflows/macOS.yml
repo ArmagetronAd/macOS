@@ -51,7 +51,7 @@ jobs:
           for f in src/tron/gLogo.cpp Makefile.am Makefile.in; do sed < armagetronad/$f > retrocycles/$f -e "s,textures/title.jpg,textures/title.png,"; done
           git clone https://gitlab.com/armagetronad/steam-art
           cp steam-art/good/title.png retrocycles/textures/
-          (cd retrocycles; automake)
+          (cd retrocycles; ./bootstrap.sh)
 
           ## build retrocycles
           mkdir retrocycles_client
