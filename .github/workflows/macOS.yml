@@ -64,9 +64,9 @@ jobs:
           mkdir -p ~/.ssh
           cat known_hosts >> ~/.ssh/known_hosts
 
-          rsync -r release "${UPLOAD}"
+          rsync -r release/ "${UPLOAD}"
           #scp -r release "${UPLOAD}"
           echo "done" > release/mac_is_done.txt
-          scp release/mac_is_done.txt "${UPLOAD}"/
+          scp release/mac_is_done.txt "${UPLOAD}"/mac_is_done.txt
 
           set +x
