@@ -45,16 +45,17 @@ jobs:
           #(cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
 
           ## prepare retrocycles
+          cp -ax armagetronad retrocycles
+          sed < armagetronad/src/engine/ePlayer.cpp > retrocycles/src/engine/ePlayer.cpp -e "s/pr0n/cat videos/"
+          for f in src/tron/gLogo.cpp Makefile.am Makefile.in; do sed < armagetronad/$f > retrocycles/$f -e "s,textures/title.jpg,textures/title.png,"; done
           git clone https://gitlab.com/armagetronad/steam-art
-          sed -i armagetronad/src/engine/ePlayer.cpp -e "s/pr0n/cat videos/"
-          cp steam-art/good/title.png armagetronad/textures/
-          sed -i armagetronad/src/tron/gLogo.cpp armagetronad/Makefile.* -e "s,textures/title.jpg,textures/title.png,"
-          (cd armagetronad; automake)
+          cp steam-art/good/title.png retrocycles/textures/
+          (cd retrocycles; automake)
 
           ## build retrocycles
-          mkdir retrocycles
-          (cd retrocycles && progname="${PROGNAME_RC}" progtitle="${PROGTITLE_RC}" ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
-          (cd retrocycles && bash src/macosx/build_bundle.sh `pwd`/../release)
+          mkdir retrocycles_client
+          (cd retrocycles_client && progname="${PROGNAME_RC}" progtitle="${PROGTITLE_RC}" ../retrocycles/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
+          (cd retrocycles_client && bash src/macosx/build_bundle.sh `pwd`/../release)
 
           mkdir -p release
           echo "fake" > release/fake
