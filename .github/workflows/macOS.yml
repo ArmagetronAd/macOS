@@ -2,7 +2,7 @@ name: macOS workflow
 
 on:
   push:
-    branches: [ trunk ]
+    branches: [ deploy_* ]
   workflow_dispatch:
 
 jobs:
