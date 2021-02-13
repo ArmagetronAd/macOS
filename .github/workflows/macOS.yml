@@ -3,10 +3,7 @@ name: macOS workflow
 on:
   push:
     branches: [ trunk ]
-  pull_request:
-    branches: [ trunk ]
   workflow_dispatch:
-
 
 jobs:
   build:
@@ -23,22 +20,29 @@ jobs:
           brew install autoconf automake sdl sdl_image dylibbundler create-dmg 
           # for 0.4
           #brew install autoconf automake sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
-          git clone https://gitlab.com/zmanuel/armagetronad.git
-          git -C armagetronad checkout legacy_0.2.8.3_macos_bundle
-          (cd armagetronad && ./bootstrap.sh)
+          # git clone https://gitlab.com/zmanuel/armagetronad.git
+          # git -C armagetronad checkout legacy_0.2.8.3_macos_bundle
+          # import build settings
+          . ./INFO
+          wget "${TARBALL}" -o source.tbz
+          (mkdir source; cd source; tar -xjf ../source.tbz; mv * ../armagetronad)
+          rmdir source source.tbz
+          # (cd armagetronad && ./bootstrap.sh)
           mkdir client
+          export ARMAGETRONAD_FAKERELEASE=true
           (cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
           (cd client && bash src/macosx/build_bundle.sh `pwd`/../release) 
           #mkdir server
           #(cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
           #(cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
-      - name: Artifact
+      - name: Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: macOS client dmg
-          path: release/armagetronad-*.dmg
-      - name: Artifact
-        uses: actions/upload-artifact@v2
+          name: macOS images
+          path: release
+      - name: Deploy
+        uses: webfactory/ssh-agent@v0.4.1
         with:
-          name: macOS client zip
-          path: release/armagetronad-*.zip
+          ssh-private-key: ${{ secrets.SSH_KEY_DEPLOY }}
+        run: |
+          rsync release ${UPLOAD}

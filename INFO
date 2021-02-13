@@ -1,0 +1,5 @@
+TARBALL=https://download.armagetronad.org/staging/alpha/2021/0.2.8.3.7_alpha_z1601/armagetronad-alpha-0.2.8.3.7_alpha_z1601.tbz
+VERSION=0.2.8.3.7_alpha_z1601
+BRANCH=alpha
+PROGTITLE_RC="Retrocycles Alpha"
+UPLOAD=arma0install@builder.armagetronad.org:~/staging/alpha/2021/mactest
