@@ -27,7 +27,8 @@ jobs:
           . ./INFO
           wget "${TARBALL}" -O source.tbz
           (mkdir source; cd source; tar -xjf ../source.tbz; mv * ../armagetronad)
-          rmdir source source.tbz
+          rmdir source
+          rm -f source.tbz
           # (cd armagetronad && ./bootstrap.sh)
           mkdir client
           export ARMAGETRONAD_FAKERELEASE=true
