@@ -59,7 +59,7 @@ jobs:
           set -x
           
           mkidr -p ~/.ssh
-          cat known_hosts ~/.ssh/known_hosts
+          cat known_hosts >> ~/.ssh/known_hosts
 
           rsync -r release "${UPLOAD}"
           echo "done" > release/mac_is_done.txt
