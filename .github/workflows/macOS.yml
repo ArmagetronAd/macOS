@@ -55,12 +55,8 @@ jobs:
 
           ## build retrocycles
           mkdir retrocycles_client
-          (cd retrocycles_client && progname="${PROGNAME_RC}" progtitle="${PROGTITLE_RC}" ../retrocycles/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
-          (cd retrocycles_client && bash src/macosx/build_bundle.sh `pwd`/../release)
-
-          mkdir -p release
-          echo "fake" > release/fake
-          set +x
+          #(cd retrocycles_client && progname="${PROGNAME_RC}" progtitle="${PROGTITLE_RC}" ../retrocycles/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
+          #(cd retrocycles_client && bash src/macosx/build_bundle.sh `pwd`/../release)
       - name: Artifacts
         uses: actions/upload-artifact@v2
         with:
