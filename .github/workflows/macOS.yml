@@ -58,7 +58,7 @@ jobs:
           . ./INFO
           set -x
           
-          mkidr -p ~/.ssh
+          mkdir -p ~/.ssh
           cat known_hosts >> ~/.ssh/known_hosts
 
           rsync -r release "${UPLOAD}"
