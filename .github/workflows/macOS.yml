@@ -36,13 +36,14 @@ jobs:
           export ARMAGETRONAD_FAKERELEASE=true
 
           ## build client
-          #mkdir client
-          #(cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
-          #(cd client && bash src/macosx/build_bundle.sh `pwd`/../release)
+          mkdir client
+          (cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
+          (cd client && bash src/macosx/build_bundle.sh `pwd`/../release)
+
           ## build server
-          #mkdir server
-          #(cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
-          #(cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
+          mkdir server
+          (cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
+          (cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
 
           ## prepare retrocycles
           cp -a armagetronad retrocycles
@@ -54,7 +55,7 @@ jobs:
 
           ## build retrocycles
           mkdir retrocycles_client
-          (cd retrocycles_client && progname="${PROGNAME_RC}" progtitle="${PROGTITLE_RC}" ../retrocycles/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
+          (cd retrocycles_client && progname="${PROGNAME_RC}" progtitle="${PROGTITLE_RC}" ../retrocycles/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
           (cd retrocycles_client && bash src/macosx/build_bundle.sh `pwd`/../release)
 
           mkdir -p release
