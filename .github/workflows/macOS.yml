@@ -28,7 +28,7 @@ jobs:
 
           ## get source
           wget "${TARBALL}" -O source.tbz
-          (mkdir source; cd source; tar -xjf ../source.tbz; mv * ../armagetronad)
+          (mkdir source; cd source; tar -xjf ../source.tbz; mv *${VERSION}* ../armagetronad)
           rmdir source
           rm -f source.tbz
 
@@ -55,6 +55,9 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY_DEPLOY }}
       - name: Deploy
         run: |
-          rsync -r release ${UPLOAD}
+          . ./INFO
+          set -x
+          rsync -r release "${UPLOAD}"
           echo "done" > release/mac_is_done.txt
-          scp release/mac_is_done.txt ${UPLOAD}/
+          scp release/mac_is_done.txt "${UPLOAD}"/
+          set +x
