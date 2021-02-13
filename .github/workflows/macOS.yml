@@ -33,7 +33,7 @@ jobs:
           rm -f source.tbz
 
           ## maybe speed up testing
-          export ARMAGETRONAD_FAKERELEASE=true
+          #export ARMAGETRONAD_FAKERELEASE=true
 
           ## build client
           mkdir client
