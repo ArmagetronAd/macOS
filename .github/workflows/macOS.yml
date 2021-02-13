@@ -57,7 +57,12 @@ jobs:
         run: |
           . ./INFO
           set -x
+          
+          mkidr -p ~/.ssh
+          cat known_hosts ~/.ssh/known_hosts
+
           rsync -r release "${UPLOAD}"
           echo "done" > release/mac_is_done.txt
           scp release/mac_is_done.txt "${UPLOAD}"/
+
           set +x
