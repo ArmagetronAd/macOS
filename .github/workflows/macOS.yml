@@ -45,7 +45,7 @@ jobs:
           #(cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
 
           ## prepare retrocycles
-          cp -ax armagetronad retrocycles
+          cp -a armagetronad retrocycles
           sed < armagetronad/src/engine/ePlayer.cpp > retrocycles/src/engine/ePlayer.cpp -e "s/pr0n/cat videos/"
           for f in src/tron/gLogo.cpp Makefile.am Makefile.in; do sed < armagetronad/$f > retrocycles/$f -e "s,textures/title.jpg,textures/title.png,"; done
           git clone https://gitlab.com/armagetronad/steam-art
