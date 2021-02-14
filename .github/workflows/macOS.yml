@@ -35,15 +35,21 @@ jobs:
           ## maybe speed up testing
           #export ARMAGETRONAD_FAKERELEASE=true
 
+          # build script location varies between branches, better define it once
+          BUILD_BUNDLE=src/macosx/build_bundle.sh
+
+          # most configure arguments are shared between builds
+          CONFIG_ARGS="--disable-sysinstall --disable-etc --prefix=/usr"
+
           ## build client
           mkdir client
-          (cd client && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
-          (cd client && bash src/macosx/build_bundle.sh `pwd`/../release)
+          (cd client && ../armagetronad/configure ${CONFIG_ARGS} && make -j `nproc`)
+          (cd client && bash "${BUILD_BUNDLE}" "`pwd`/../release")
 
           ## build server
           mkdir server
-          (cd server && ../armagetronad/configure --disable-sysinstall --disable-etc --prefix=/usr --disable-glout && make -j `nproc`)
-          (cd server && bash src/macosx/build_bundle.sh `pwd`/../release)
+          (cd server && ../armagetronad/configure ${CONFIG_ARGS} --disable-glout && make -j `nproc`)
+          (cd server && bash "${BUILD_BUNDLE}" "`pwd`/../release")
 
           ## prepare retrocycles
           cp -a armagetronad retrocycles
@@ -55,8 +61,8 @@ jobs:
 
           ## build retrocycles
           mkdir retrocycles_client
-          #(cd retrocycles_client && progname="${PROGNAME_RC}" progtitle="${PROGTITLE_RC}" ../retrocycles/configure --disable-sysinstall --disable-etc --prefix=/usr && make -j `nproc`)
-          #(cd retrocycles_client && bash src/macosx/build_bundle.sh `pwd`/../release)
+          #(cd retrocycles_client && progname="${PROGNAME_RC}" progtitle="${PROGTITLE_RC}" ../retrocycles/configure ${CONFIG_ARGS} && make -j `nproc`)
+          #(cd retrocycles_client && bash "${BUILD_BUNDLE}" "`pwd`/../release")
       - name: Artifacts
         uses: actions/upload-artifact@v2
         with:
