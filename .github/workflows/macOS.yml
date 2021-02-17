@@ -18,10 +18,7 @@ jobs:
           set -x
 
           ## prepare system
-          # for 0.2.X
-          brew install automake sdl sdl_image dylibbundler create-dmg 
-          # for 0.4
-          #brew install automake sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
+          brew install automake sdl2 sdl2_image sdl2_mixer protobuf-c glew boost ftgl dylibbundler create-dmg 
           
           ## import build settings
           . ./INFO
