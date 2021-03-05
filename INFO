@@ -1,6 +1,6 @@
-TARBALL=https://download.armagetronad.org/staging/alpha/2021/0.2.8.3.7_alpha_z1601/armagetronad-alpha-0.2.8.3.7_alpha_z1601.tbz
-VERSION=0.2.8.3.7_alpha_z1601
+TARBALL=http://download.armagetronad.org/staging/alpha/2021/0.2.8.3.7_alpha_z1630/armagetronad-alpha-0.2.8.3.7_alpha_z1630.tbz
+VERSION=0.2.8.3.7_alpha_z1630
 BRANCH=alpha
-PROGTITLE_RC="Retrocycles Alpha"
-PROGNAME_RC="retrocycles-alpha"
-UPLOAD=arma0install@builder.armagetronad.org:/home/arma0install/staging/alpha/2021/mactest
+PROGTITLE_RC="Retrocycles"
+PROGNAME_RC="retrocycles"
+UPLOAD=arma0install@builder.armagetronad.org:/home/arma0install/staging/alpha/2021/0.2.8.3.7_alpha_z1630/macOS
